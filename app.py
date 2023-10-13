@@ -8,7 +8,6 @@ client_id = os.environ.get('CLIENT_ID', '***NO CLIENT ID***')
 client_secret = os.environ.get('CLIENT_SECRET', '***NO CLIENT SECRET***')
 authority = os.environ.get('AUTHORITY', '***NO AUTHORITY***')
 
-st.markdown(f":green[*** Authority is: {authority} ***]")
 scopes=["https://graph.microsoft.com/.default"]
 
 app = msal.ConfidentialClientApplication(
@@ -37,6 +36,18 @@ if result:
         st.write(result.get("correlation_id"))  # You may need this when reporting a bug
 else:
     st.markdown(":red[=-=-=- NO RESULT FROM SILENT TOKEN ACQUISITION =-=-=-]")
+    result = app.acquire_token_by_one_of_the_actual_method(..., scopes=scopes)
+
+if result:
+    if "access_token" in result:
+        st.write(result["access_token"])
+    else:
+        st.write(result.get("error"))
+        st.write(result.get("error_description"))
+        st.write(result.get("correlation_id"))  # You may need this when reporting a bug
+else:
+    st.markdown(":red[-*-* STILL NO BLOODY TOKEN -*-*]")
+
 
 # ---- Header Section -----
 with st.container():
