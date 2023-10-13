@@ -2,10 +2,13 @@ import streamlit as st
 import os
 import msal
 
+st.set_page_config(page_title="You are authenticated!!!!", page_icon=":ninja:", layout="wide")
+
 client_id = os.environ.get('CLIENT_ID', '***NO CLIENT ID***')
 client_secret = os.environ.get('CLIENT_SECRET', '***NO CLIENT SECRET***')
 authority = os.environ.get('AUTHORITY', '***NO AUTHORITY***')
 
+st.markdown(f":green[*** Authority is: {authority} ***]")
 scopes=["https://graph.microsoft.com/.default"]
 
 app = msal.ConfidentialClientApplication(
@@ -19,10 +22,11 @@ accounts = app.get_accounts()
 your_account = None
 if (accounts):
     your_account = accounts[0]
+    st.write(your_account)
+else:
+    st.markdown(":red[=-=-=- NO ACCOUNT FOUND =-=-=-]")
 
 result = app.acquire_token_silent(scopes, account=your_account)
-
-st.set_page_config(page_title="Hello streamlit", page_icon=":ninja", layout="wide")
 
 if result:
     if "access_token" in result:
