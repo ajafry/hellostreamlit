@@ -1,5 +1,7 @@
 import streamlit as st
-from streamlit.script_run_context import get_script_run_ctx
+#from streamlit.script_run_context import get_script_run_ctx
+#>>>from streamlit.scriptrunner.script_run_context import get_script_run_ctx
+#from streamlit.runtime.scriptrunner import get_script_run_ctx
 from streamlit.server.server import Server
 import os
 import msal
